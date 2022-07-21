@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "2ddb81bd-2fe0-4683-8538-e4697aff4975",
+		"name": "01_root",
+		"description": "possible action items/usage:\r\n- redfish root (see all bigger category features supported)\r\n- more detail info for each supported resource\r\n\r\nrelated uris:\r\n- /redfish/v1\r\n- /redfish/v1/$metadata",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET redfish root",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1"
+					]
+				},
+				"description": "root link to all resources accessible by redfish"
+			},
+			"response": []
+		},
+		{
+			"name": "GET $metadata",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/$metadata",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"$metadata"
+					]
+				},
+				"description": "more detailed info for each resource"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

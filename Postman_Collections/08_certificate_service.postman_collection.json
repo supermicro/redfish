@@ -1,0 +1,211 @@
+{
+	"info": {
+		"_postman_id": "18f61092-f25e-4f61-b0e3-9aef46244ead",
+		"name": "08_certificate_service",
+		"description": "certificate management\r\n\r\npossible action items/usage:\r\n- generate CSR\r\n- reeplace certificate\r\n\r\nrelated uris:\r\n- /redfish/v1/CertificateService\r\n- /redfish/v1/CertificateService/CertificateLocations\r\n- /redfish/v1/CertificateService/GenerateCSRActionInfo\r\n- /redfish/v1/CertificateService/Actions/CertificateService.GenerateCSR\r\n- /redfish/v1/CertificateService/ReplaceCertificateActionInfo\r\n- /redfish/v1/CertificateService/Actions/CertificateService.ReplaceCertificate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET certificate service",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/CertificateService",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"CertificateService"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET all certificate locations",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/CertificateService/CertificateLocations",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"CertificateService",
+						"CertificateLocations"
+					]
+				},
+				"description": "- array of all links to certificate uris in the service"
+			},
+			"response": []
+		},
+		{
+			"name": "generate https csr string",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"AlternativeNames\": [\r\n        \"name\"\r\n    ],\r\n    \"City\": \"San Jose\",\r\n    \"Country\": \"US\",\r\n    \"State\": \"CA\",\r\n    \"CommonName\": \"test\",\r\n    \"Email\": \"sample@email.com\",\r\n    \"Organization\": \"company\",\r\n    \"OrganizationalUnit\": \"team\",\r\n    \"KeyPairAlgorithm\": \"TPM_ALG_RSA\",\r\n    \"KeyBitLength\": 4096,\r\n    \"KeyUsage\": [\r\n        \"ServerAuthentication\"\r\n    ],\r\n    \"CertificateCollection\": {\r\n        \"@odata.id\": \"/redfish/v1/Managers/1/NetworkProtocol/HTTPS/Certificates\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/CertificateService/Actions/CertificateService.GenerateCSR",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"CertificateService",
+						"Actions",
+						"CertificateService.GenerateCSR"
+					]
+				},
+				"description": "- returns a CSR string\r\n- modify values as desired; optional values:\r\n    - AlternativeNames\r\n    - KeyBitLength\r\n    - KeyUsage"
+			},
+			"response": []
+		},
+		{
+			"name": "replace https certificate",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"CertificateString\": \"-----BEGIN CERTIFICATE-----\\n...\\n-----END CERTIFICATE-----\",\r\n    \"CertificateType\": \"PEM\",\r\n    \"CertificateUri\": {\r\n        \"@odata.id\": \"/redfish/v1/Managers/1/NetworkProtocol/HTTPS/Certificates/1\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/CertificateService/Actions/CertificateService.ReplaceCertificate",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"CertificateService",
+						"Actions",
+						"CertificateService.ReplaceCertificate"
+					]
+				},
+				"description": "- **sample payload only**\r\n- modify CertificateString to a valid certificate PEM string\r\n- cannot be used with the response from GenerateCSR action (CertificateString needs to be a certificate, not CSR string)"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

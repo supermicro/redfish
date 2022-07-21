@@ -1,0 +1,257 @@
+{
+	"info": {
+		"_postman_id": "2f267c0a-0bb9-455e-93bd-748f17538353",
+		"name": "02_session_service",
+		"description": "redfish session management\r\n\r\npossible action items/usage:\r\n- create a redfish session (X-Auth-Token for authorization)\r\n- modify session timeout\r\n\r\nrelated uris:\r\n- /redfish/v1/SessionService\r\n- /redfish/v1/SessionService/Sessions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET session service",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/SessionService",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"SessionService"
+					]
+				},
+				"description": "all things redfish session related"
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH session timeout",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"SessionTimeout\": 300}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/SessionService",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"SessionService"
+					]
+				},
+				"description": "modify body value to change session timeout (type int)"
+			},
+			"response": []
+		},
+		{
+			"name": "GET session collection",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/SessionService/Sessions",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"SessionService",
+						"Sessions"
+					]
+				},
+				"description": "- array of all active redfish/web sessions"
+			},
+			"response": []
+		},
+		{
+			"name": "create a session",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"UserName\": {{username}}, \"Password\": {{password}}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/SessionService/Sessions",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"SessionService",
+						"Sessions"
+					]
+				},
+				"description": "- modify body with an **existing** account's username and password to establish a session\r\n- **save the X-Auth-Token in the headers in the response**\r\n- X-Auth-Token can be used to replace credentials for future requests (given that the session is live)"
+			},
+			"response": []
+		},
+		{
+			"name": "delete a session",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "{{$randomLoremText}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/SessionService/Sessions/1",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"SessionService",
+						"Sessions",
+						"1"
+					]
+				},
+				"description": "- uri destination is a sample only, actual destination depends on which session location was in the headers in Create a Session\r\n- replace X-Auth-Token value in the header to the X-Auth-Token retrieved from Create a Session"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

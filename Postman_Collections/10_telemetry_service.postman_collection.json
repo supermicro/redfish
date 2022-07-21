@@ -1,0 +1,1132 @@
+{
+	"info": {
+		"_postman_id": "4e110b00-7850-4725-867d-e6214118f2b9",
+		"name": "10_telemetry_service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21960137"
+	},
+	"item": [
+		{
+			"name": "metric report definitions",
+			"item": [
+				{
+					"name": "GET metric report definitions",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReportDefinitions",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReportDefinitions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET avg power consumption hour",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReportDefinitions/AvgPowerConsumptionHour",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReportDefinitions",
+								"AvgPowerConsumptionHour"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET min power consumption hour",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReportDefinitions/MinPowerConsumptionHour",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReportDefinitions",
+								"MinPowerConsumptionHour"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET max power consumption hour",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReportDefinitions/MaxPowerConsumptionHour",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReportDefinitions",
+								"MaxPowerConsumptionHour"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET avg power consumption day",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReportDefinitions/AvgPowerConsumptionDay",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReportDefinitions",
+								"AvgPowerConsumptionDay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET min power consumption day",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReportDefinitions/MinPowerConsumptionDay",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReportDefinitions",
+								"MinPowerConsumptionDay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET max power consumption day",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReportDefinitions/MaxPowerConsumptionDay",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReportDefinitions",
+								"MaxPowerConsumptionDay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET avg power consumption week",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReportDefinitions/AvgPowerConsumptionWeek",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReportDefinitions",
+								"AvgPowerConsumptionWeek"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET min power consumption week",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReportDefinitions/MinPowerConsumptionWeek",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReportDefinitions",
+								"MinPowerConsumptionWeek"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET max power consumption week",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReportDefinitions/MaxPowerConsumptionWeek",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReportDefinitions",
+								"MaxPowerConsumptionWeek"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "metric definitions",
+			"item": [
+				{
+					"name": "GET metric definitions",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricDefinitions",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricDefinitions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET avg power consumed hour",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricDefinitions/AvgPowerConsumedHour",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricDefinitions",
+								"AvgPowerConsumedHour"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET min power consumed hour",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricDefinitions/MinPowerConsumedHour",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricDefinitions",
+								"MinPowerConsumedHour"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET man power consumed hour",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricDefinitions/MaxPowerConsumedHour",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricDefinitions",
+								"MaxPowerConsumedHour"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET avg power consumed day",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricDefinitions/AvgPowerConsumedDay",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricDefinitions",
+								"AvgPowerConsumedDay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET min power consumed day",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricDefinitions/MinPowerConsumedDay",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricDefinitions",
+								"MinPowerConsumedDay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET max power consumed day",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricDefinitions/MaxPowerConsumedDay",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricDefinitions",
+								"MaxPowerConsumedDay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET avg power consumed week",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricDefinitions/AvgPowerConsumedWeek",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricDefinitions",
+								"AvgPowerConsumedWeek"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET min power consumed week",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricDefinitions/MinPowerConsumedWeek",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricDefinitions",
+								"MinPowerConsumedWeek"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET max power consumed week",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricDefinitions/MaxPowerConsumedWeek",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricDefinitions",
+								"MaxPowerConsumedWeek"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "metric reports",
+			"item": [
+				{
+					"name": "GET metric reports",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReports",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET avg power consumption hour",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReports/AvgPowerConsumptionHour",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReports",
+								"AvgPowerConsumptionHour"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET min power consumption hour",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReports/MinPowerConsumptionHour",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReports",
+								"MinPowerConsumptionHour"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET max power consumption hour",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReports/MaxPowerConsumptionHour",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReports",
+								"MaxPowerConsumptionHour"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET avg power consumption day",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReports/AvgPowerConsumptionDay",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReports",
+								"AvgPowerConsumptionDay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET min power consumption day",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReports/MinPowerConsumptionDay",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReports",
+								"MinPowerConsumptionDay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET max power consumption day",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReports/MaxPowerConsumptionDay",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReports",
+								"MaxPowerConsumptionDay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET avg power consumption week",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReports/AvgPowerConsumptionWeek",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReports",
+								"AvgPowerConsumptionWeek"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET min power consumption week",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReports/MinPowerConsumptionWeek",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReports",
+								"MinPowerConsumptionWeek"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET max power consumption week",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/TelemetryService/MetricReports/MaxPowerConsumptionWeek",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"TelemetryService",
+								"MetricReports",
+								"MaxPowerConsumptionWeek"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
