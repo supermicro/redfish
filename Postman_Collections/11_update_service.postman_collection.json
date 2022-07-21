@@ -1,0 +1,1008 @@
+{
+	"info": {
+		"_postman_id": "e98a7a83-c80c-41a9-bd1e-dfa639712f2d",
+		"name": "11_update_service",
+		"description": "possible action items/usage:\r\n- upload SSL certificate\r\n- load/download IPMI configuration\r\n- update firmware\r\n\r\nrelated uris:\r\n- /redfish/v1/UpdateService/Oem/Supermicro/SSLCert\r\n- /redfish/v1/UpdateService/Oem/Supermicro/SSLCert/Actions/SmcSSLCert.Upload\r\n- /redfish/v1/UpdateService/Oem/Supermicro/IPMIConfig\r\n- /redfish/v1/UpdateService/Oem/Supermicro/IPMIConfig/Actions/SmcIPMIConfig.Upload\r\n- /redfish/v1/UpdateService/Oem/Supermicro/IPMIConfig/Actions/SmcIPMIConfig.Download\r\n- /redfish/v1/UpdateService/upload\r\n- /redfish/v1/UpdateService/FirmwareInventory\r\n- /redfish/v1/UpdateService/FirmwareInventory/[fw]",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ssl certificate",
+			"item": [
+				{
+					"name": "GET SSL cert",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/UpdateService/Oem/Supermicro/SSLCert",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"UpdateService",
+								"Oem",
+								"Supermicro",
+								"SSLCert"
+							]
+						},
+						"description": "- check current ssl cert validity time frame\r\n- target link to update SSL certificate"
+					},
+					"response": []
+				},
+				{
+					"name": "upload new ssl certificate",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cert_file",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "key_file",
+									"type": "file",
+									"src": []
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/UpdateService/Oem/Supermicro/SSLCert/Actions/SmcSSLCert.Upload",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"UpdateService",
+								"Oem",
+								"Supermicro",
+								"SSLCert",
+								"Actions",
+								"SmcSSLCert.Upload"
+							]
+						},
+						"description": "- **please provide own cert and key files in body**"
+					},
+					"response": []
+				}
+			],
+			"description": "- get ssl certificate info\r\n- replace ssl certificate",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "ipmi configuration",
+			"item": [
+				{
+					"name": "GET ipmi config main",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/UpdateService/Oem/Supermicro/IPMIConfig",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"UpdateService",
+								"Oem",
+								"Supermicro",
+								"IPMIConfig"
+							]
+						},
+						"description": "- contains target link to upload ipmi config file\r\n- contains target link to download current ipmi config"
+					},
+					"response": []
+				},
+				{
+					"name": "upload ipmi config file",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "impi_config_file",
+									"type": "file",
+									"src": []
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/UpdateService/Oem/Supermicro/IPMIConfig/Actions/SmcIPMIConfig.Upload",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"UpdateService",
+								"Oem",
+								"Supermicro",
+								"IPMIConfig",
+								"Actions",
+								"SmcIPMIConfig.Upload"
+							]
+						},
+						"description": "- **please provide own ipmi config bin in body**"
+					},
+					"response": []
+				},
+				{
+					"name": "download ipmi config file",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/UpdateService/Oem/Supermicro/IPMIConfig/Actions/SmcIPMIConfig.Download",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"UpdateService",
+								"Oem",
+								"Supermicro",
+								"IPMIConfig",
+								"Actions",
+								"SmcIPMIConfig.Download"
+							]
+						},
+						"description": "- no body"
+					},
+					"response": []
+				}
+			],
+			"description": "- download current ipmi configuration\r\n- reload ipmi configuration",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "fw update",
+			"item": [
+				{
+					"name": "bmc: immediate update no preserve no backup",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "UpdateParameters",
+									"value": "{\"Targets\": [\"/redfish/v1/Managers/1\"],\"@Redfish.OperationApplyTime\": \"Immediate\",\"Oem\": {\"Supermicro\": {\"BMC\": {\"PreserveCfg\": false,\"PreserveSdr\": false,\"PreserveSsl\": false,\"BackupBMC\": false}}}}",
+									"type": "text"
+								},
+								{
+									"key": "UpdateFile",
+									"type": "file",
+									"src": []
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/UpdateService/upload",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"UpdateService",
+								"upload"
+							]
+						},
+						"description": "- **please provide own bmc fw file in body**\r\n- BackupBMC is only applicable to RoT platforms"
+					},
+					"response": []
+				},
+				{
+					"name": "bmc: immediate update preserve all and back up",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "UpdateParameters",
+									"value": "{\"Targets\": [\"/redfish/v1/Managers/1\"],\"@Redfish.OperationApplyTime\": \"Immediate\",\"Oem\": {\"Supermicro\": {\"BMC\": {\"PreserveCfg\": true,\"PreserveSdr\": true,\"PreserveSsl\": true,\"BackupBMC\": true}}}}",
+									"type": "text"
+								},
+								{
+									"key": "UpdateFile",
+									"type": "file",
+									"src": []
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/UpdateService/upload",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"UpdateService",
+								"upload"
+							]
+						},
+						"description": "- **please provide own bmc fw file in body**\r\n- sample payload will preserve all three options, modify as desired\r\n    - PreserveCfg: ipmi configuration\r\n    - PreserveSdr: SDR info\r\n    - PreserveSsl: SSL certificate\r\n- BackupBMC is only applicable to RoT platforms"
+					},
+					"response": []
+				},
+				{
+					"name": "bmc: upload fw for update no preserve no backup",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "UpdateParameters",
+									"value": "{\"Targets\": [\"/redfish/v1/Managers/1\"],\"@Redfish.OperationApplyTime\": \"OnStartUpdateRequest\",\"Oem\": {\"Supermicro\": {\"BMC\": {\"PreserveCfg\": false,\"PreserveSdr\": false,\"PreserveSsl\": false,\"BackupBMC\": false}}}}",
+									"type": "text"
+								},
+								{
+									"key": "UpdateFile",
+									"type": "file",
+									"src": []
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/UpdateService/upload",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"UpdateService",
+								"upload"
+							]
+						},
+						"description": "- **please provide own bmc fw file in body**\r\n- this action will **NOT** update FW until a separate request to Start Update is sent\r\n- BackupBMC is only applicable to RoT platforms"
+					},
+					"response": []
+				},
+				{
+					"name": "start  update",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/UpdateService/Actions/UpdateService.StartUpdate",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"UpdateService",
+								"Actions",
+								"UpdateService.StartUpdate"
+							]
+						},
+						"description": "- this will start any update that has been pending (only upload fw was completed)\r\n- does not work with immediate updates"
+					},
+					"response": []
+				},
+				{
+					"name": "bios: immediate update no preserve no backup",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "UpdateParameters",
+									"value": "{\"Targets\": [\"/redfish/v1/Systems/1/Bios\"],\"@Redfish.OperationApplyTime\": \"Immediate\",\"Oem\": {\"Supermicro\": {\"BIOS\": {\"PreserveSMBIOS\": false, \"BackupBIOS\": false}}}}",
+									"type": "text"
+								},
+								{
+									"key": "UpdateFile",
+									"type": "file",
+									"src": []
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/UpdateService/upload",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"UpdateService",
+								"upload"
+							]
+						},
+						"description": "- **please provide own bios fw file in body**\r\n- BackupBIOS is only applicable to RoT platforms"
+					},
+					"response": []
+				},
+				{
+					"name": "bios: immediate update preserve and backup",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "UpdateParameters",
+									"value": "{\"Targets\": [\"/redfish/v1/Systems/1/Bios\"],\"@Redfish.OperationApplyTime\": \"Immediate\",\"Oem\": {\"Supermicro\": {\"BIOS\": {\"PreserveSMBIOS\": true, \"BackupBIOS\": true}}}}",
+									"type": "text"
+								},
+								{
+									"key": "UpdateFile",
+									"type": "file",
+									"src": []
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/UpdateService/upload",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"UpdateService",
+								"upload"
+							]
+						},
+						"description": "- **please provide own bios fw file in body**\r\n- sample payload will preserve SMBIOS, modify as desired\r\n- BackupBIOS is only applicable to RoT platforms"
+					},
+					"response": []
+				},
+				{
+					"name": "bios: upload fw for update no preserve no backup",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "UpdateParameters",
+									"value": "{\"Targets\": [\"/redfish/v1/Systems/1/Bios\"],\"@Redfish.OperationApplyTime\": \"OnStartUpdateRequest\",\"Oem\": {\"Supermicro\": {\"BIOS\": {\"PreserveSMBIOS\": false, \"BackupBIOS\": false}}}}",
+									"type": "text"
+								},
+								{
+									"key": "UpdateFile",
+									"type": "file",
+									"src": []
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/UpdateService/upload",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"UpdateService",
+								"upload"
+							]
+						},
+						"description": "- **please provide own bios fw file in body**\r\n- this action will **NOT** update FW until a separate request to Start Update is sent\r\n- BackupBIOS is only applicable to RoT platforms"
+					},
+					"response": []
+				},
+				{
+					"name": "bios: staged update no preserve no backup",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "UpdateParameters",
+									"value": "{\"Targets\": [\"/redfish/v1/Systems/1/Bios\"],\"@Redfish.OperationApplyTime\": \"OnReset\",\"Oem\": {\"Supermicro\": {\"BIOS\": {\"PreserveSMBIOS\": false, \"BackupBIOS\": false}}}}",
+									"type": "text"
+								},
+								{
+									"key": "UpdateFile",
+									"type": "file",
+									"src": []
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/UpdateService/upload",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"UpdateService",
+								"upload"
+							]
+						},
+						"description": "- **please provide own bios fw file in body**\r\n- this action will **NOT** update FW until a host reboot is performed (host reset)\r\n- BackupBIOS is only applicable to RoT platforms"
+					},
+					"response": []
+				}
+			],
+			"description": "- update bmc\r\n- update bios",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "GET update service",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/UpdateService",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"UpdateService"
+					]
+				},
+				"description": "- links to various other services, ex. update ssl cert, download ipmi config"
+			},
+			"response": []
+		},
+		{
+			"name": "GET all firmware info",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/UpdateService/FirmwareInventory",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"UpdateService",
+						"FirmwareInventory"
+					]
+				},
+				"description": "- array of links to all fw information (may or may not be updateable)"
+			},
+			"response": []
+		},
+		{
+			"name": "GET bmc info",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/UpdateService/FirmwareInventory/BMC",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"UpdateService",
+						"FirmwareInventory",
+						"BMC"
+					]
+				},
+				"description": "- check current bmc fw info\r\n    - version\r\n    - build date\r\n    - file name"
+			},
+			"response": []
+		},
+		{
+			"name": "GET bios info",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/UpdateService/FirmwareInventory/BIOS",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"UpdateService",
+						"FirmwareInventory",
+						"BIOS"
+					]
+				},
+				"description": "- check current bios fw info\r\n    - version\r\n    - build date\r\n    - file name"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

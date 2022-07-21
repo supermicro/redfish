@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "8e3e2ace-85c7-4021-877a-b620f72b515f",
+		"name": "09_task_service",
+		"description": "status for long(er)-running tasks\r\n\r\npossible action items/usage:\r\n- check task progress\r\n- check for any ongoing processes\r\n\r\nrelated uris:\r\n- /redfish/v1/TaskService\r\n- /redfish/v1/TaskService/Tasks\r\n- /redfish/v1/TaskService/Tasks/[task_num]",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET task service",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/TaskService",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"TaskService"
+					]
+				},
+				"description": "- task settings"
+			},
+			"response": []
+		},
+		{
+			"name": "disable task service",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ServiceEnabled\": false}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/TaskService",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"TaskService"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "enable task service",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ServiceEnabled\": true}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/TaskService",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"TaskService"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET tasks",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/TaskService/Tasks",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"TaskService",
+						"Tasks"
+					]
+				},
+				"description": "- array of all tasks (running, pending, completed, failed, killed/cancelled)"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

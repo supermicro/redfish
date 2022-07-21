@@ -1,0 +1,397 @@
+{
+	"info": {
+		"_postman_id": "b4c2f363-b0b5-4945-9da8-8264b64bf374",
+		"name": "04__chassis",
+		"description": "possible action items/usage:\r\n- check thermal sensors\r\n- check power/voltage sensors\r\n- check fan sensors\r\n- check storage info (controller + drives)\r\n- turn on/off UID (chassis)\r\n- turn on/off locator LED for drives (where supported)\r\n- check PCIe devices (includes AOC NICs + GPUs)\r\n\r\nrelated uris:\r\n- /redfish/v1/Chassis\r\n- /redfish/v1/Chassis/1\r\n- /redfish/v1/Chassis/1/Thermal\r\n- /redfish/v1/Chassis/1/Power\r\n- /redfish/v1/Chassis/1/Sensors\r\n- /redfish/v1/Chassis/1/Sensors/[sensor_num]\r\n- /redfish/v1/Chassis/1/NetworkAdapters\r\n- /redfish/v1/Chassis/1/NetworkAdapters/[adapter_num]\r\n- /redfish/v1/Chassis/1/NetworkAdapters/[adapter_num]/NetworkPorts\r\n- /redfish/v1/Chassis/1/NetworkAdapters/[adapter_num]/NetworkPorts/[np_num]\r\n- /redfish/v1/Chassis/1/NetworkAdapters/[adapter_num]/NetworkDeviceFunctions\r\n- /redfish/v1/Chassis/1/NetworkAdapters/[adapter_num]/NetworkDeviceFunctions/[ndf_num]\r\n- /redfish/v1/Chassis/1/PCIeSlots\r\n- /redfish/v1/Chassis/1/PCIeDevices\r\n- /redfish/v1/Chassis/1/PCIeDevices/NIC[aoc_card_num]\r\n- /redfish/v1/Chassis/1/PCIeDevices/NIC[aoc_card_num]/PCIeFunctions\r\n- /redfish/v1/Chassis/1/PCIeDevices/NIC[aoc_card_num]/PCIeFunctions/[port_num]\r\n- /redfish/v1/Chassis/1/PCIeDevices/GPU[gpu_card_num]\r\n- /redfish/v1/Chassis/1/PCIeDevices/GPU[gpu_card_num]/PCIeFunctions\r\n- /redfish/v1/Chassis/1/PCIeDevices/GPU[gpu_card_num]/PCIeFunctions/[gpu_instance_num]\r\n- /redfish/v1/Chassis/1/PCIeDevices/NVMeSSD[nvme_ssd_num]\r\n- /redfish/v1/Chassis/1/PCIeDevices/NVMeSSD[nvme_ssd_num]/PCIeFunctions\r\n- /redfish/v1/Chassis/1/PCIeDevices/NVMeSSD[nvme_ssd_num]/PCIeFunctions/[nvme_ssd_instance_num]\r\n- /redfish/v1/Chassis/1/PCIeDevices/PCIeSSD[pcie_ssd_num]\r\n- /redfish/v1/Chassis/1/PCIeDevices/PCIeSSD[pcie_ssd_num]/PCIeFunctions\r\n- /redfish/v1/Chassis/1/PCIeDevices/PCIeSSD[pcie_ssd_num]/PCIeFunctions/[pcie_ssd_instance_num]\r\n- /redfish/v1/Chassis/HA-RAID.[contoller_num].StorageEnclosure.[enclosure_num]\r\n- /redfish/v1/Chassis/HA-RAID.[contoller_num].StorageEnclosure.[enclosure_num]/Drives/Disk.Bay.[disk_num]\r\n- /redfish/v1/Chassis/HA-RAID.[contoller_num].StorageEnclosure.[enclosure_num]/Drives/Disk.Bay.[disk_num]/Actions/Oem/SmcDrive.Indicate\r\n- /redfish/v1/Chassis/HA-RAID.[contoller_num].StorageEnclosure.[enclosure_num]/Drives/Disk.Bay.[disk_num]/IndicateActionInfo\r\n- /redfish/v1/Chassis/HA-RAID.[contoller_num].StorageEnclosure.[enclosure_num]/Drives/Disk.Bay.[disk_num]/Actions/Drive.SecureErase\r\n- /redfish/v1/Chassis/HA-RAID.[contoller_num].StorageEnclosure.[enclosure_num]/Drives/Disk.Bay.[disk_num]/Actions/Oem/SmcDrive.SecureEraseAbort\r\n- /redfish/v1/Chassis/HBA.[contoller_num].StorageEnclosure.[enclosure_num]\r\n- /redfish/v1/Chassis/HBA.[contoller_num].StorageEnclosure.[enclosure_num]/Drives/Disk.Bay.[disk_num]\r\n- /redfish/v1/Chassis/HBA.[contoller_num].StorageEnclosure.[enclosure_num]/Drives/Disk.Bay.[disk_num]/Actions/Oem/SmcDrive.Indicate\r\n- /redfish/v1/Chassis/HBA.[contoller_num].StorageEnclosure.[enclosure_num]/Drives/Disk.Bay.[disk_num]/IndicateActionInfo\r\n- /redfish/v1/Chassis/StorageBackplane\r\n- /redfish/v1/Chassis/StorageBackplane/Drives/Disk.Bay.[disk_num]\r\n- /redfish/v1/Chassis/NVMeSSD.[pcie_controller_num].Group.[group_num].StorageBackplane\r\n- /redfish/v1/Chassis/NVMeSSD.[pcie_controller_num].Group.[group_num].StorageBackplane/Drives/Disk.Bay.[disk_num]\r\n- /redfish/v1/Chassis/NVMeSSD.[pcie_controller_num].Group.[group_num].StorageBackplane/Drives/Disk.Bay.[disk_num]/Actions/Oem/SmcDrive.Indicate\r\n- /redfish/v1/Chassis/NVMeSSD.[pcie_controller_num].Group.[group_num].StorageBackplane/Drives/Disk.Bay.[disk_num]/IndicateActionInfo\r\n- /redfish/v1/Chassis/MRVL.HA-RAID.[contoller_num].StorageModule\r\n- /redfish/v1/Chassis/MRVL.HA-RAID.[contoller_num].StorageModule/Drives/Disk.Bay.[disk_num]",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET chassis collection",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Chassis",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Chassis"
+					]
+				},
+				"description": "- array of chassis components (main chassis will be in /Chassis/1)\r\n- storage"
+			},
+			"response": []
+		},
+		{
+			"name": "GET chassis info",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Chassis/1",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Chassis",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "turn on chassis UID",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"IndicatorLED\": \"Blinking\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Chassis/1",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Chassis",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "turn off chassis UID",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"IndicatorLED\": \"Off\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Chassis/1",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Chassis",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET power info",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Chassis/1/Power",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Chassis",
+						"1",
+						"Power"
+					]
+				},
+				"description": "- voltage sensors"
+			},
+			"response": []
+		},
+		{
+			"name": "GET thermal info",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Chassis/1/Thermal",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Chassis",
+						"1",
+						"Thermal"
+					]
+				},
+				"description": "- thermal sensors\r\n- fan sensors"
+			},
+			"response": []
+		},
+		{
+			"name": "GET discrete sensors",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Chassis/1/Sensors",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Chassis",
+						"1",
+						"Sensors"
+					]
+				},
+				"description": "- array of discrete sensors (ex. VBAT)"
+			},
+			"response": []
+		},
+		{
+			"name": "GET all installed PCIeDevices",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Chassis/1/PCIeDevices",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Chassis",
+						"1",
+						"PCIeDevices"
+					]
+				},
+				"description": "- array might include any AOC NICs and GPUs"
+			},
+			"response": []
+		},
+		{
+			"name": "GET PCIe slot info",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Chassis/1/PCIeSlots",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Chassis",
+						"1",
+						"PCIeSlots"
+					]
+				},
+				"description": "- reflects PCIe slots on the board\r\n- any NIC/GPUs installed in the slots will be reflected (and linked)"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

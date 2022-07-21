@@ -1,0 +1,1007 @@
+{
+	"info": {
+		"_postman_id": "e3d56300-93d6-4f03-9147-b9caf20685cd",
+		"name": "03_account_service",
+		"description": "ipmi (redfish + web) and snmp account management\r\n\r\npossible action items/usage:\r\n- check how many accounts + their privileges\r\n- create an account\r\n- delete an account\r\n- modify an account (role, username, password, account type, other credentials (ex. SNMP))\r\n\r\nrelated uris:\r\n- /redfish/v1/AccountService\r\n- /redfish/v1/AccountService/Accounts\r\n- /redfish/v1/AccountService/Accounts/[num]",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "account modification",
+			"item": [
+				{
+					"name": "create admin redfish account",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"UserName\": \"redfishAdmin\", \"Password\": \"1qaz@WSX\", \"RoleId\": \"Administrator\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/AccountService/Accounts",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"AccountService",
+								"Accounts"
+							]
+						},
+						"description": "- change UserName and Password in body as desired"
+					},
+					"response": []
+				},
+				{
+					"name": "create operator redfish account",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"UserName\": \"redfishOp\", \"Password\": \"1qaz@WSX\", \"RoleId\": \"Operator\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/AccountService/Accounts",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"AccountService",
+								"Accounts"
+							]
+						},
+						"description": "- modify UserName and Password values"
+					},
+					"response": []
+				},
+				{
+					"name": "create readOnly redfish account",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"UserName\": \"redfishUser\", \"Password\": \"1qaz@WSX\", \"RoleId\": \"ReadOnly\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/AccountService/Accounts",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"AccountService",
+								"Accounts"
+							]
+						},
+						"description": "- modify UserName and Password"
+					},
+					"response": []
+				},
+				{
+					"name": "create snmp account",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"UserName\": \"SNMPonly\", \"Password\": \"1qaz@WSX\", \"RoleId\": \"Administrator\", \"AccountTypes\": [\"SNMP\"],\r\n    \"SNMP\": {\"AuthenticationProtocol\": \"HMAC_MD5\", \"AuthenticationKey\": \"asdQWE123\", \"EncryptionProtocol\": \"CBC_DES\", \"EncryptionKey\": \"asdQWE1234\"}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/AccountService/Accounts",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"AccountService",
+								"Accounts"
+							]
+						},
+						"description": "- modify\r\n    - UserName\r\n    - Password\r\n    - SNMP.AuthenticationProtocol(HMAC_MD5 or HMAC_SHA96)\r\n    - SNMP.AuthenticationKey (no special chars)\r\n    - SNMP.EncryptionProtocol (CBC_DES or CFB128_AES128)\r\n    - SNMP.EncryptionKey (no special chars)"
+					},
+					"response": []
+				},
+				{
+					"name": "create SNNP and admin redfish account",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"UserName\": \"SNMPred\", \"Password\": \"1qaz@WSX\", \"RoleId\": \"Administrator\", \"AccountTypes\": [\"SNMP\", \"Redfish\"],\r\n    \"SNMP\": {\"AuthenticationProtocol\": \"HMAC_MD5\", \"AuthenticationKey\": \"asdQWE123\", \"EncryptionProtocol\": \"CBC_DES\", \"EncryptionKey\": \"asdQWE1234\"}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/AccountService/Accounts",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"AccountService",
+								"Accounts"
+							]
+						},
+						"description": "- modify\r\n    - UserName\r\n    - Password\r\n    - RoleId (Administrator, Operator, ReadOnly) : for Redfish only\r\n    - SNMP.AuthenticationProtocol(HMAC_MD5 or HMAC_SHA96)\r\n    - SNMP.AuthenticationKey (no special chars)\r\n    - SNMP.EncryptionProtocol (CBC_DES or CFB128_AES128)\r\n    - SNMP.EncryptionKey (no special chars)"
+					},
+					"response": []
+				},
+				{
+					"name": "modify account username",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"UserName\": \"changed\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/AccountService/Accounts/3",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"AccountService",
+								"Accounts",
+								"3"
+							]
+						},
+						"description": "- location is **sample only**, actual location to make PATCH request is based on which account to modify"
+					},
+					"response": []
+				},
+				{
+					"name": "modify account password",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Password\": \"Mod1f1ed12\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/AccountService/Accounts/3",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"AccountService",
+								"Accounts",
+								"3"
+							]
+						},
+						"description": "- location is **sample only**, actual location to make PATCH request is based on which account to modify"
+					},
+					"response": []
+				},
+				{
+					"name": "change account type to SNMP only",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"RoleId\": [\"SNMP\"], \"SNMP\": {\"AuthenticationProtocol\": \"HMAC_MD5\", \"AuthenticationKey\": \"asdASD123\", \"EncryptionProtocol\": \"CBC_DES\", \"EncryptionKey\": \"asdASD123\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/AccountService/Accounts/3",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"AccountService",
+								"Accounts",
+								"3"
+							]
+						},
+						"description": "- location is **sample only**, actual location to make PATCH request is based on which account to modify"
+					},
+					"response": []
+				},
+				{
+					"name": "change account type to SNMP + redfish",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"RoleId\": [\"SNMP\", \"Redfish\"], \"SNMP\": {\"AuthenticationProtocol\": \"HMAC_MD5\", \"AuthenticationKey\": \"asdASD123\", \"EncryptionProtocol\": \"CBC_DES\", \"EncryptionKey\": \"asdASD123\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/AccountService/Accounts/3",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"AccountService",
+								"Accounts",
+								"3"
+							]
+						},
+						"description": "- location is **sample only**, actual location to make PATCH request is based on which account to modify"
+					},
+					"response": []
+				},
+				{
+					"name": "change account type to redfish only",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"RoleId\": [\"Redfish\"]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/AccountService/Accounts/3",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"AccountService",
+								"Accounts",
+								"3"
+							]
+						},
+						"description": "- location is **sample only**, actual location to make PATCH request is based on which account to modify"
+					},
+					"response": []
+				},
+				{
+					"name": "delete account",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/AccountService/Accounts/3",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"AccountService",
+								"Accounts",
+								"3"
+							]
+						},
+						"description": "- **sample location only**"
+					},
+					"response": []
+				}
+			],
+			"description": "- add account: Redfish, SNMP, both\r\n- modify account (username, password, account type)\r\n- delete account",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "directory services (AD + LDAP)",
+			"item": [
+				{
+					"name": "enable + configure LDAP",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"LDAP\": {\r\n    \"ServiceEnabled\": true,\r\n    \"ServiceAddresses\": [\r\n        \"ldap://1.2.3.4:389\",\r\n        \"ldaps://5.6.7.8:636\"\r\n    ],\r\n    \"Authentication\": {\r\n        \"Username\": \"cn=Manager, dc=satc, dc=com\",\r\n        \"Password\": \"secret\"\r\n    },\r\n    \"RemoteRoleMapping\": [\r\n        {\"RemoteUser\": \"tester001\", \"LocalRole\": \"Administrator\"},\r\n        {\"RemoteGroup\": \"cn=testers,cn=Users,dc=ad,dc=satc,dc=com\", \"LocalRole\": \"Operator\"},\r\n        {\"RemoteUser\": \"testing\", \"LocalRole\": \"ReadOnly\"}\r\n    ],\r\n    \"LDAPService\": {\r\n        \"SearchSettings\": {\r\n            \"BaseDistinguishedNames\": [\"dc=satc, dc=com\"],\r\n            \"UsernameAttribute\": \"cn\"\r\n        }\r\n    }\r\n}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/AccountService",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"AccountService"
+							]
+						},
+						"description": "- template provided, all attributes are configurable, depending on LDAP server"
+					},
+					"response": []
+				},
+				{
+					"name": "enable + configure AD",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"ActiveDirectory\": {\r\n    \"ServiceEnabled\": true,\r\n    \"ServiceAddresses\": [\r\n        \"ldap://1.2.3.4:389\",\r\n        \"ldaps://5.6.7.8:636\"\r\n    ],\r\n    \"Authentication\": {\r\n        \"Username\": \"tester001\"\r\n    },\r\n    \"RemoteRoleMapping\": [\r\n        {\"RemoteUser\": \"tester001\", \"LocalRole\": \"Administrator\"},\r\n        {\"RemoteGroup\": \"cn=testers,cn=Users,dc=ad,dc=satc,dc=com\", \"LocalRole\": \"Operator\"},\r\n        {\"RemoteUser\": \"testing\", \"LocalRole\": \"ReadOnly\"}\r\n    ]\r\n}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/AccountService",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"AccountService"
+							]
+						},
+						"description": "- template provided, all attributes are configurable, depending on AD server"
+					},
+					"response": []
+				}
+			],
+			"description": "- enable and configure LDAP\r\n- enable and configure Active Directory",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "GET account service",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/AccountService",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"AccountService"
+					]
+				},
+				"description": "- get/set account settings\r\n- get/set AD and LDAP settings"
+			},
+			"response": []
+		},
+		{
+			"name": "configure account lockout threshold",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"AccountLockoutThreshold\": 3}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/AccountService",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"AccountService"
+					]
+				},
+				"description": "- change value in body (type int)"
+			},
+			"response": []
+		},
+		{
+			"name": "configure account lockout duration",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"AccountLockoutDuration\": 30}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/AccountService",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"AccountService"
+					]
+				},
+				"description": "- change value in body (type int)\r\n- restriction: must be >= AccountLockoutCounterResetAfter"
+			},
+			"response": []
+		},
+		{
+			"name": "configure account lockout counter reset after",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"AccountLockoutCounterResetAfter\": 30}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/AccountService",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"AccountService"
+					]
+				},
+				"description": "- change value in body (type int)\r\n- restriction: must be <= AccountLockoutDuration\r\n- this value is the max amount of time between incorrect attempts that will be considered consecutive failed attempts (i.e. when the amount of time that has passed between a first incorrect attempt and a second incorrect attempt is > than this value, the second incorrect attempt will be considered \"the first attempt\" again towards the lockout threshold)"
+			},
+			"response": []
+		},
+		{
+			"name": "GET roles",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/AccountService/Roles",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"AccountService",
+						"Roles"
+					]
+				},
+				"description": "- get all configurable account roles"
+			},
+			"response": []
+		},
+		{
+			"name": "GET account collection",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/AccountService/Accounts",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"AccountService",
+						"Accounts"
+					]
+				},
+				"description": "array of all accounts"
+			},
+			"response": []
+		},
+		{
+			"name": "GET admin/default account",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/AccountService/Accounts/2",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"AccountService",
+						"Accounts",
+						"2"
+					]
+				},
+				"description": "default ADMIN account"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

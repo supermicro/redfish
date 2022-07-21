@@ -1,0 +1,515 @@
+{
+	"info": {
+		"_postman_id": "75590477-f1ab-48fe-84e5-c2ce42395bdd",
+		"name": "07_event_service",
+		"description": "subscriptions + SMTP configuration\r\n\r\npossible action items/usage:\r\n- configure subscriptions\r\n- configure SMTP service\r\n\r\nrelated uris:\r\n- /redfish/v1/EventService\r\n- /redfish/v1/EventService/Subscriptions\r\n- /redfish/v1/EventService/Subscriptions/[num]",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET event service",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/EventService",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"EventService"
+					]
+				},
+				"description": "- get/set SMTP configuration\r\n- link to all subscriptions"
+			},
+			"response": []
+		},
+		{
+			"name": "configure SMTP",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"SMTP\": {\"ServerAddress\": \"sample.com\", \"FromAddress\": \"sampleemail@mail.com\", \"ConnectionProtocol\": \"TLS_SSL\", \"Authentication\": \"Login\", \"Username\": \"tester\", \"Password\": \"sample\"}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/EventService",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"EventService"
+					]
+				},
+				"description": "- **sample payload only**\r\n- modify all values as desired\r\n- OPTIONAL (only include as needed):\r\n    - FromAddress (only if desired)\r\n    - ConnectionProtocol\r\n    - Authentication\r\n    - Username (if authentication needed)\r\n    - Password (if authentciation needed)"
+			},
+			"response": []
+		},
+		{
+			"name": "GET all subscriptions",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/EventService/Subscriptions",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"EventService",
+						"Subscriptions"
+					]
+				},
+				"description": "- array of all configurable subscription slots (all default disabled)"
+			},
+			"response": []
+		},
+		{
+			"name": "GET subscription",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/EventService/Subscriptions/1",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"EventService",
+						"Subscriptions",
+						"1"
+					]
+				},
+				"description": "- sample target, replace 1 in target location with the # subscription as desired\r\n    - for example if want to check third subscription, change GET location to /redfish/v1/EventService/Subscriptions/3"
+			},
+			"response": []
+		},
+		{
+			"name": "configure redfish subscription",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Oem\": {\"Supermicro\": {\"EnableSubscription\": true}},\r\n    \"Protocol\": \"Redfish\",\r\n    \"Destination\": \"http://1.2.3.4:80\",\r\n    \"Context\": \"testevent\",\r\n    \"EventTypes\": [\"Alert\", \"ResourceAdded\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/EventService/Subscriptions/1",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"EventService",
+						"Subscriptions",
+						"1"
+					]
+				},
+				"description": "- sample location only (will depend on which subscription to configure)\r\n- modify the following as desired\r\n    - Destination: keep http/s + port\r\n    - Context: string to provide context in event\r\n    - EventTypes\r\n- EventTypes is an array type that can contain one or up to all of the following\r\n    - Alert\r\n    - ResourceAdded\r\n    - ResourceRemoved\r\n    - ResourceUpdated\r\n    - StatusChange"
+			},
+			"response": []
+		},
+		{
+			"name": "configure smtp subscription",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Oem\": {\"Supermicro\": {\r\n        \"EnableSubscription\": true,\r\n        \"SMTPSubject\": \"bmcevent\",\r\n        \"Severity\": \"Information\"}},\r\n    \"Protocol\": \"SMTP\",\r\n    \"Destination\": \"targetemail@mail.com\",\r\n    \"Context\": \"testevent\",\r\n    \"EventTypes\": [\"Alert\", \"ResourceAdded\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/EventService/Subscriptions/1",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"EventService",
+						"Subscriptions",
+						"1"
+					]
+				},
+				"description": "- sample location only (will depend on which subscription to configure)\r\n- modify the following as desired\r\n    - Destination: target email address\r\n    - Context: string to provide context in event\r\n    - SMTPSubject: string for subject line\r\n    - Severity: Information / Warning / Critical\r\n    - EventTypes\r\n- EventTypes is an array type that can contain one or up to all of the following\r\n    - Alert\r\n    - ResourceAdded\r\n    - ResourceRemoved\r\n    - ResourceUpdated\r\n    - StatusChange"
+			},
+			"response": []
+		},
+		{
+			"name": "configure snmpv1 subscription",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Oem\": {\"Supermicro\": {\r\n        \"EnableSubscription\": true,\r\n        \"Severity\": \"Information\"}},\r\n    \"Protocol\": \"SNMPv1\",\r\n    \"Destination\": \"4.5.6.7\",\r\n    \"SNMP\": {\"TrapCommunity\": \"public\"}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/EventService/Subscriptions/1",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"EventService",
+						"Subscriptions",
+						"1"
+					]
+				},
+				"description": "- sample location only (will depend on which subscription to configure)\r\n- modify the following as desired\r\n    - Destination: snmp receiver\r\n    - TrapCommunity: string\r\n    - Severity: Information / Warning / Critical"
+			},
+			"response": []
+		},
+		{
+			"name": "configure snmpv3 subscription",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Oem\": {\"Supermicro\": {\r\n        \"EnableSubscription\": true,\r\n        \"UserName\": \"ipmitest\",\r\n        \"Severity\": \"Information\"}},\r\n    \"Protocol\": \"SNMPv3\",\r\n    \"Destination\": \"4.5.6.7\",\r\n    \"SNMP\": {\r\n        \"AuthenticationProtocol\": \"HMAC_MD5\",\r\n        \"EncryptionProtocol\": \"CBC_DES\",\r\n        \"AuthenticationKey\": \"123qweASD\",\r\n        \"EncryptionKey\": \"123QWEasd\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/EventService/Subscriptions/1",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"EventService",
+						"Subscriptions",
+						"1"
+					]
+				},
+				"description": "- sample location only (will depend on which subscription to configure)\r\n- modify the following as desired\r\n    - Destination: snmp receiver\r\n    - AuthenticationProtocol: HMAC_MD5 / HMAC_SHA96\r\n    - EncryptionProtocol: CBC_DES / CFB128_AES128\r\n    - AuthenticationKey: string\r\n    - EncyrptionKey: string\r\n    - Severity: Information / Warning / Critical"
+			},
+			"response": []
+		},
+		{
+			"name": "GET submit test event action info",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/EventService/SubmitTestEventActionInfo",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"EventService",
+						"SubmitTestEventActionInfo"
+					]
+				},
+				"description": "- details all possible and required/optional parameters for SubmitTestEvent action"
+			},
+			"response": []
+		},
+		{
+			"name": "send test event",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"EventId\": \"10\", \"Message\": \"testing event receiver\", \"MessageId\": \"Event.1.0.TestEvent\", \"MessageArgs\": [\"\"]}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/EventService/Actions/EventService.SubmitTestEvent",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"EventService",
+						"Actions",
+						"EventService.SubmitTestEvent"
+					]
+				},
+				"description": "- mainly to test subscriptions\r\n- will send an event to all enabled subscriptions\r\n- only required attribute in payload is MessageId\r\n- specific parameter details check action info"
+			},
+			"response": []
+		},
+		{
+			"name": "clear subscription configuration",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/EventService/Subscriptions/1",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"EventService",
+						"Subscriptions",
+						"1"
+					]
+				},
+				"description": "- sample location only, modify to desired subscription\r\n- will restore subscription configuration to default"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

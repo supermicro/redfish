@@ -1,0 +1,3551 @@
+{
+	"info": {
+		"_postman_id": "44beb9bb-9405-46f0-b3c4-4b3d949aacce",
+		"name": "05_managers",
+		"description": "configure various bmc settings\r\n\r\npossible action items/usage:\r\n- set date and time, NTP servers\r\n- get BMC ip/network settings\r\n- configure host interface\r\n- perform bmc unit reset\r\n- perform factory default\r\n- check maintenance event log\r\n- check mounted devices, mount/unmount virtual media\r\n- configure and get IKVM link\r\n- configure RADIUS, syslog\r\n- configure ip access/filter rules\r\n- configure fan mode, mouse mode\r\n- configure smcrakp, kcs privilege\r\n- license management\r\n- enable system lockdown\r\n- check POST code\r\n\r\nrelated uris:\r\n- /redfish/v1/Managers/1\r\n- /redfish/v1/Managers/1/Actions/Manager.Reset\r\n- /redfish/v1/Managers/1/Actions/Oem/SmcManagerConfig.Reset\r\n- /redfish/v1/Managers/1/Oem/Supermicro/ResetActionInfo\r\n- /redfish/v1/Managers/1/SerialInterfaces\r\n- /redfish/v1/Managers/1/SerialInterfaces/[service_num]\r\n- /redfish/v1/Managers/1/LogServices\r\n- /redfish/v1/Managers/1/LogServices/Log1\r\n- /redfish/v1/Managers/1/LogServices/Log1/Actions/LogService.ClearLog\r\n- /redfish/v1/Managers/1/LogServices/Log1/Entries \r\n- /redfish/v1/Managers/1/LogServices/Log1/Entries/[log_num]\r\n- /redfish/v1/Managers/1/VirtualMedia\r\n- /redfish/v1/Managers/1/VirtualMedia/CD[mounted_dev_num]          \r\n- /redfish/v1/Managers/1/VirtualMedia/CD[mounted_dev_num]/Actions/VirtualMedia.InsertMedia\r\n- /redfish/v1/Managers/1/VirtualMedia/CD[mounted_dev_num]/InsertMediaActionInfo\r\n- /redfish/v1/Managers/1/VirtualMedia/CD[mounted_dev_num]/Actions/VirtualMedia.EjectMedia\r\n- /redfish/v1/Managers/1/VirtualMedia/Floppy[mounted_dev_num]\r\n- /redfish/v1/Managers/1/EthernetInterfaces\r\n- /redfish/v1/Managers/1/EthernetInterfaces/[eth_num]\r\n- /redfish/v1/Managers/1/EthernetInterfaces/ToHost\r\n- /redfish/v1/Managers/1/HostInterfaces\r\n- /redfish/v1/Managers/1/HostInterfaces/1\r\n- /redfish/v1/Managers/1/HostInterfaces/1/HostEthernetInterfaces\r\n- /redfish/v1/Managers/1/NetworkProtocol\r\n- /redfish/v1/Managers/1/NetworkProtocol/HTTPS/Certificates\r\n- /redfish/v1/Managers/1/NetworkProtocol/HTTPS/Certificates/1\r\n- /redfish/v1/Managers/1/NetworkProtocol/HTTPS/Certificates/1/Actions/Certificate.Rekey\r\n- /redfish/v1/Managers/1/NetworkProtocol/HTTPS/Certificates/1/RekeyActionInfo\r\n- /redfish/v1/Managers/1/NetworkProtocol/HTTPS/Certificates/1/Actions/Certificate.Renew\r\n- /redfish/v1/Managers/1/Oem/Supermicro/FanMode\r\n- /redfish/v1/Managers/1/Oem/Supermicro/MouseMode\r\n- /redfish/v1/Managers/1/Oem/Supermicro/Snooping\r\n- /redfish/v1/Managers/1/Oem/Supermicro/Syslog\r\n- /redfish/v1/Managers/1/Oem/Supermicro/RADIUS\r\n- /redfish/v1/Managers/1/Oem/Supermicro/SMCRAKP\r\n- /redfish/v1/Managers/1/Oem/Supermicro/IPAccessControl\r\n- /redfish/v1/Managers/1/Oem/Supermicro/IPAccessControl/FilterRules\r\n- /redfish/v1/Managers/1/Oem/Supermicro/IPAccessControl/FilterRules/[rule_num]\r\n- /redfish/v1/Managers/1/Oem/Supermicro/NTP\r\n- /redfish/v1/Managers/1/Oem/Supermicro/IKVM\r\n- /redfish/v1/Managers/1/Oem/Supermicro/KCSInterface\r\n- /redfish/v1/Managers/1/Oem/Supermicro/SysLockdown\r\n- /redfish/v1/Managers/1/Oem/Supermicro/SmartPower\r\n- /redfish/v1/Managers/1/LicenseManager\r\n- /redfish/v1/Managers/1/LicenseManager/ActivateLicense\r\n- /redfish/v1/Managers/1/LicenseManager/QueryLicense\r\n- /redfish/v1/Managers/1/LicenseManager/ClearLicense",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "bmc network configuration",
+			"item": [
+				{
+					"name": "GET ethernet interfaces",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/EthernetInterfaces",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"EthernetInterfaces"
+							]
+						},
+						"description": "- array of links to bmc ip configuration + host interface"
+					},
+					"response": []
+				},
+				{
+					"name": "GET network port info",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/NetworkProtocol",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"NetworkProtocol"
+							]
+						},
+						"description": "- services enabled\r\n- which port used for each service\r\n- ports:\r\n    - HTTP/S\r\n    - IPMI\r\n    - SNMP\r\n    - SSH\r\n    - NTP\r\n    - Virtual Media\r\n    - KVMIP\r\n    - SSDP"
+					},
+					"response": []
+				},
+				{
+					"name": "enable/disable port",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"SSH\": {\"ProtocolEnabled\": true}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/NetworkProtocol",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"NetworkProtocol"
+							]
+						},
+						"description": "- modify \"SSH\" to desired port\r\n- ProtocolEnabled = bool (true/false)"
+					},
+					"response": []
+				},
+				{
+					"name": "change port value",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"SSH\": {\"Port\": 20}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/NetworkProtocol",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"NetworkProtocol"
+							]
+						},
+						"description": "- modify \"SSH\" to desired port\r\n- Port = int within valid port range\r\n- make sure port to change to is not already occupied/used"
+					},
+					"response": []
+				},
+				{
+					"name": "configure NTP servers",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"NTP\": {\"NTPServers\": [\"time.google.com\", \"time1.google.com\"]}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/NetworkProtocol",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"NetworkProtocol"
+							]
+						},
+						"description": "- modify the two array elements under NTPServers as desired\r\n- note if NTP sync fails, NTP service will automatically disable"
+					},
+					"response": []
+				},
+				{
+					"name": "GET detailed SSL cert info",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/NetworkProtocol/HTTPS/Certificates/1",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"NetworkProtocol",
+								"HTTPS",
+								"Certificates",
+								"1"
+							]
+						},
+						"description": "- also linked from CertificateLocations"
+					},
+					"response": []
+				},
+				{
+					"name": "rekey https ssl certificate",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"KeyPairAlgorithm\": \"TPM_ALG_RSA\", \"KeyBitLength\": 4096}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/NetworkProtocol/HTTPS/Certificates/1/Actions/Certificate.Rekey",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"NetworkProtocol",
+								"HTTPS",
+								"Certificates",
+								"1",
+								"Actions",
+								"Certificate.Rekey"
+							]
+						},
+						"description": "- modify KeyBitLength as desired (can remove)\r\n    - 1024\r\n    - 2048\r\n    - 3072\r\n    - 4096"
+					},
+					"response": []
+				},
+				{
+					"name": "renew https ssl certificate",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/NetworkProtocol/HTTPS/Certificates/1/Actions/Certificate.Renew",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"NetworkProtocol",
+								"HTTPS",
+								"Certificates",
+								"1",
+								"Actions",
+								"Certificate.Renew"
+							]
+						},
+						"description": "- generates a certificate signing request"
+					},
+					"response": []
+				}
+			],
+			"description": "- bmc ip info (ipv4, ipv6 settings)\r\n- service port : enable/disable, change port info\r\n- host interface info",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "fan mode",
+			"item": [
+				{
+					"name": "GET fan mode",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/FanMode",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"FanMode"
+							]
+						},
+						"description": "- current setting\r\n- shows allowable configurable modes"
+					},
+					"response": []
+				},
+				{
+					"name": "change fan mode",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Mode\": \"FullSpeed\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/FanMode",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"FanMode"
+							]
+						},
+						"description": "- modify Mode as desired, value must be one of the values in Mode@Redfish.AllowableValues"
+					},
+					"response": []
+				}
+			],
+			"description": "- get/set fan mode\r\n- allowable values provided in resource",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "RADIUS configuration",
+			"item": [
+				{
+					"name": "GET RADIUS",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/RADIUS",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"RADIUS"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "configure RADIUS",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"RadiusEnabled\": true, \"RadiusServer\": \"1.2.3.4\", \"RadiusPortNumber\": 1812, \"RadiusSecret\": \"secret\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/RADIUS",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"RADIUS"
+							]
+						},
+						"description": "- modify the following as desired\r\n    - RadiusEnabled: bool\r\n    - RadiusServer: ipv4/ipv6/domain name\r\n    - RadiusPortNumber: int in valid port range\r\n    - RadiusSecret: string"
+					},
+					"response": []
+				}
+			],
+			"description": "- modify RADIUS configuration",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "ikvm",
+			"item": [
+				{
+					"name": "GET ikvm",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/IKVM",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"IKVM"
+							]
+						},
+						"description": "- get current ikvm interface (HTML5 or java)\r\n- if current interface is HTML5, a link will be included in the response; this can be used to open an ikvm console"
+					},
+					"response": []
+				},
+				{
+					"name": "change ikvm interface",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Current interface\": \"HTML 5\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/IKVM",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"IKVM"
+							]
+						},
+						"description": "- modify Current interface as desired\r\n    - \"HTML 5\"\r\n    - \"JAVA plug-in\"\r\n- spaces are needed to work"
+					},
+					"response": []
+				}
+			],
+			"description": "- get/set HTML5 or Java console\r\n- get HTML5 ikvm link",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "IP access control",
+			"item": [
+				{
+					"name": "GET IP access control",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/IPAccessControl",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"IPAccessControl"
+							]
+						},
+						"description": "- enable/disable the service here"
+					},
+					"response": []
+				},
+				{
+					"name": "configure IP access control",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"ServiceEnabled\": true}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/IPAccessControl",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"IPAccessControl"
+							]
+						},
+						"description": "- value is type bool (true=enabled)"
+					},
+					"response": []
+				},
+				{
+					"name": "GET filter rules",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/IPAccessControl/FilterRules",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"IPAccessControl",
+								"FilterRules"
+							]
+						},
+						"description": "- array of all configured filter rules"
+					},
+					"response": []
+				},
+				{
+					"name": "create drop filter rule",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Address\": \"1.2.3.4\", \"PrefixLength\": 32, \"Policy\": \"Drop\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/IPAccessControl/FilterRules",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"IPAccessControl",
+								"FilterRules"
+							]
+						},
+						"description": "- modify Address and PrefixLength as desired"
+					},
+					"response": []
+				},
+				{
+					"name": "create accept filter rule",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Address\": \"1.2.3.5\", \"PrefixLength\": 32, \"Policy\": \"Accept\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/IPAccessControl/FilterRules",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"IPAccessControl",
+								"FilterRules"
+							]
+						},
+						"description": "- modify Address and PrefixLength as desired"
+					},
+					"response": []
+				},
+				{
+					"name": "delete filter rule",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/IPAccessControl/FilterRules/1",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"IPAccessControl",
+								"FilterRules",
+								"1"
+							]
+						},
+						"description": "- **sample location**\r\n- FilterRules/[num] depends on which filter to delete"
+					},
+					"response": []
+				}
+			],
+			"description": "- enable/disable ip access control\r\n- add/remove filter rules\r\n- note can create two filter rules for the same address but different policy, but the one created first takes precedence",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "kcs interface",
+			"item": [
+				{
+					"name": "GET kcs interface settings",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/KCSInterface",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"KCSInterface"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modify kcs privilege",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Privilege\": \"Administrator\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/KCSInterface",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"KCSInterface"
+							]
+						},
+						"description": "- modify value for Privilege as desired\r\n    - Administrator / Operator / User"
+					},
+					"response": []
+				}
+			],
+			"description": "- get/set kcs privilege",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "license management",
+			"item": [
+				{
+					"name": "GET license manager",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/LicenseManager",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"LicenseManager"
+							]
+						},
+						"description": "link to various actions that can be performed regarding licenses"
+					},
+					"response": []
+				},
+				{
+					"name": "GET currently activated licenses",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/LicenseManager/QueryLicense",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"LicenseManager",
+								"QueryLicense"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activate license",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"ProductKey\":{\"Node\":{\"LicenseID\":\"2\",\"LicenseName\":\"SFT-DCMS-SINGLE\",\"CreateDate\":\"20220614\"},\"Signature\":\"ZKFCkgKEYh9+8MNZW7RfPlt/nRxQJGJ0kLHLkalLt1tpgs4MTLHrXvp/eZzfhSPUb5qMNu9RkFn9MaukK6vNXlOIG7ijbR+vjkxVcdIIkMnhzHFLxE/0ws74/lJyGLkSO1jHRQRaczSDuHgzSgsWivjHejB/tRlSpnAEM7FplgyuBSbisek8pEgSKua5jCf7Zn4sjYXXO7T9rTV4aFq090XgRbEay45eBSGpun9pcyGs8UIeNH93qzqCmlkcjj+bFSNcm3VeucEjScE3fzqG93NMEQQWYEdsYcuJb4a+kWP/ffFvyVRWvqSWvPgD5N+eNqKAmmC4MmjykRy3DWw4fA==\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/LicenseManager/ActivateLicense",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"LicenseManager",
+								"ActivateLicense"
+							]
+						},
+						"description": "- **sample payload only**"
+					},
+					"response": []
+				},
+				{
+					"name": "clear license",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"LicenseID\": \"2\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/LicenseManager/ClearLicense",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"LicenseManager",
+								"ClearLicense"
+							]
+						},
+						"description": "- **sample payload**\r\n- modify value for LicenseID for license to remove (can be found in QueryLicense.Licenses, each license type has its own id)\r\n- type = string\r\n- 1 = OOB, 2 = DCMS"
+					},
+					"response": []
+				}
+			],
+			"description": "- query license\r\n- activate license\r\n- delete license",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "maintenance event log",
+			"item": [
+				{
+					"name": "GET MEL",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/LogServices/Log1",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"LogServices",
+								"Log1"
+							]
+						},
+						"description": "- settings and configuration for MEL"
+					},
+					"response": []
+				},
+				{
+					"name": "disable MEL",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"ServiceEnabled\": false}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/LogServices/Log1",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"LogServices",
+								"Log1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable MEL",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"ServiceEnabled\": true}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/LogServices/Log1",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"LogServices",
+								"Log1"
+							]
+						},
+						"description": "- default MEL is enabled"
+					},
+					"response": []
+				},
+				{
+					"name": "clear MEL",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/LogServices/Log1/Actions/LogService.ClearLog",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"LogServices",
+								"Log1",
+								"Actions",
+								"LogService.ClearLog"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET MEL entries",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/LogServices/Log1/Entries",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"LogServices",
+								"Log1",
+								"Entries"
+							]
+						},
+						"description": "- array of MEL entries, links to specific entries"
+					},
+					"response": []
+				}
+			],
+			"description": "- enable/disable MEL\r\n- clear MEL",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "mouse mode",
+			"item": [
+				{
+					"name": "GET mouse mode",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/MouseMode",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"MouseMode"
+							]
+						},
+						"description": "- shows current mode\r\n- shows all possible configurable modes"
+					},
+					"response": []
+				},
+				{
+					"name": "change mouse mode",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Mode\": \"Absolute\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/MouseMode",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"MouseMode"
+							]
+						},
+						"description": "- modify value for Mode to one of Absolute, Relative, Single as desired"
+					},
+					"response": []
+				}
+			],
+			"description": "- mouse mode for ikvm",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "NTP",
+			"item": [
+				{
+					"name": "GET NTP configuration",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/NTP",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"NTP"
+							]
+						},
+						"description": "- oem"
+					},
+					"response": []
+				},
+				{
+					"name": "configure NTP",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"NTPEnable\": true, \"PrimaryNTPServer\": \"time.google.com\", \"SecondaryNTPServer\": \"time1.google.com\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/NTP",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"NTP"
+							]
+						},
+						"description": "- modify the following as desired\r\n    - NTPEnable: bool\r\n    - PrimaryNTPServer: ipv4/ipv6/domain name\r\n    - SecondaryNTPServer: ipv4/ipv6/domain name"
+					},
+					"response": []
+				},
+				{
+					"name": "configure DaylightSavingTime",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"DaylightSavingTime\": true}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/NTP",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"NTP"
+							]
+						},
+						"description": "- value is type bool, modify as desired"
+					},
+					"response": []
+				}
+			],
+			"description": "- set NTP servers\r\n- set DaylightSaving\r\n- OEM (redfish standard is in NetworkProtocol), changes will be synced",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "post code snooping",
+			"item": [
+				{
+					"name": "GET post code",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/Snooping",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"Snooping"
+							]
+						},
+						"description": "- read only"
+					},
+					"response": []
+				}
+			],
+			"description": "- POST code snooping\r\n- info reporting only",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "smcrakp",
+			"item": [
+				{
+					"name": "GET smcrakp",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/SMCRAKP",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"SMCRAKP"
+							]
+						},
+						"description": "- get current settings\r\n- default Disabled"
+					},
+					"response": []
+				},
+				{
+					"name": "configure SMCRAKP",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Mode\": \"Enabled\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/SMCRAKP",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"SMCRAKP"
+							]
+						},
+						"description": "- modify Mode as desired (Enabled / Disabled)"
+					},
+					"response": []
+				}
+			],
+			"description": "- enable/disable smcrakp",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "SNMP configuration",
+			"item": [
+				{
+					"name": "GET SNMP settings",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/NetworkProtocol",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"NetworkProtocol"
+							]
+						},
+						"description": "- settings for SNMP commands to BMC\r\n- note SNMP accounts will be created in AccountService Accounts"
+					},
+					"response": []
+				},
+				{
+					"name": "enable SNMPv2c",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"SNMP\": {\"ProtocolEnabled\": true, \"EnableSNMPv2c\": true, \"AuthenticationProtcol\": \"CommunityString\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/NetworkProtocol",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"NetworkProtocol"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create 1 limited access community string",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"SNMP\": {\r\n        \"CommunityString\": [\r\n            {\r\n                \"CommunityString\": \"private1\",\r\n                \"AccessMode\": \"Limited\",\r\n                \"Name\": \"somename1\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/NetworkProtocol",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"NetworkProtocol"
+							]
+						},
+						"description": "- after PATCH will have 1 total community string\r\n- modify CommunityString and Name as desired"
+					},
+					"response": []
+				},
+				{
+					"name": "create 1 full access community string",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"SNMP\": {\r\n        \"CommunityString\": [\r\n            {\r\n                \"CommunityString\": \"public1\",\r\n                \"AccessMode\": \"Full\",\r\n                \"Name\": \"anothername1\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/NetworkProtocol",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"NetworkProtocol"
+							]
+						},
+						"description": "- after PATCH will have 1 total community string\r\n- modify CommunityString and Name as desired"
+					},
+					"response": []
+				},
+				{
+					"name": "create multiple community strings",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"SNMP\": {\r\n        \"CommunityString\": [\r\n            {\r\n                \"CommunityString\": \"private\",\r\n                \"AccessMode\": \"Limited\",\r\n                \"Name\": \"somename\"\r\n            },\r\n            {\r\n                \"CommunityString\": \"public\",\r\n                \"AccessMode\": \"Full\",\r\n                \"Name\": \"doesnotmatter\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/NetworkProtocol",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"NetworkProtocol"
+							]
+						},
+						"description": "- sample payload will create 1 limited access community string, and 1 full access community string\r\n- modify CommunityString and Name as desired\r\n- max community strings supported = 5 (i.e. max 5 array elements)"
+					},
+					"response": []
+				},
+				{
+					"name": "hide community strings",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"SNMP\": {\"HideCommunityStrings\": true}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/NetworkProtocol",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"NetworkProtocol"
+							]
+						},
+						"description": "- value of true will hide CommunityString in CommunityStrings (changed to null when GET again)"
+					},
+					"response": []
+				},
+				{
+					"name": "show community strings",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"SNMP\": {\"HideCommunityStrings\": false}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/NetworkProtocol",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"NetworkProtocol"
+							]
+						},
+						"description": "- value of false will expose CommunityString in CommunityStrings (i.e any account with access to NetworkProtocol will be able to see the exact community strings configured)"
+					},
+					"response": []
+				},
+				{
+					"name": "enable SNMPv3",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"SNMP\": {\"ProtocolEnabled\": true, \"EnableSNMPv3\": true, \"AuthenticationProtocol\": \"Account\", \"EncryptionProtocol\": \"Account\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/NetworkProtocol",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"NetworkProtocol"
+							]
+						},
+						"description": "- AuthenticationProtocol: Account and EncryptionProtocol: Account indicate Authentication/Encryption protocols should follow the ones defined in the SNMPv3 account"
+					},
+					"response": []
+				}
+			],
+			"description": "- settings for SNMP commands to BMC\r\n- note SNMPv3 accounts/usernames will be created in AccountService Accounts",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "syslog",
+			"item": [
+				{
+					"name": "GET syslog",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/Syslog",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"Syslog"
+							]
+						},
+						"description": "- get syslog settings"
+					},
+					"response": []
+				},
+				{
+					"name": "configure syslog",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"EnableSyslog\": true, \"SyslogServer\": \"1.2.3.4\", \"SyslogPortNumber\": 514}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/Syslog",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"Syslog"
+							]
+						},
+						"description": "- modify the following as desired\r\n    - EnableSyslog: bool\r\n    - SyslogServer: ipv4/ipv6/domain name\r\n    - SyslogPortNumber: int, valid port range"
+					},
+					"response": []
+				}
+			],
+			"description": "- enabled/disable syslog service\r\n- configure syslog server + port",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "system lockdown",
+			"item": [
+				{
+					"name": "GET syslockdown",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/SysLockdown",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"SysLockdown"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "configure syslockdown",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"SysLockdownEnabled\": true}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/SysLockdown",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"Oem",
+								"Supermicro",
+								"SysLockdown"
+							]
+						},
+						"description": "- modify SysLockdownEnabled as desired\r\n    - bool (true / false)"
+					},
+					"response": []
+				}
+			],
+			"description": "- get/set system lockdown",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "virtual media",
+			"item": [
+				{
+					"name": "GET Virtual Media",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/VirtualMedia",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"VirtualMedia"
+							]
+						},
+						"description": "- default shows one link to CD1\r\n- more links will appear as more devices are mounted\r\n- max 3 devices, only 0 or 1 floppy device total\r\n- redfish + web \"share\" one slot (i.e. if mount CD via web, cannot mount via redfish and vice versa)"
+					},
+					"response": []
+				},
+				{
+					"name": "GET CD in slot 1",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/VirtualMedia/CD1",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"VirtualMedia",
+								"CD1"
+							]
+						},
+						"description": "- link will default exist"
+					},
+					"response": []
+				},
+				{
+					"name": "GET mount image parameters",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/VirtualMedia/CD1/InsertMediaActionInfo",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"VirtualMedia",
+								"CD1",
+								"InsertMediaActionInfo"
+							]
+						},
+						"description": "- more help on insert media parameters"
+					},
+					"response": []
+				},
+				{
+					"name": "mount CD",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Image\": \"https://1.2.3.4/cd.iso\", \"UserName\": \"testing\", \"Password\": \"apassword\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/VirtualMedia/CD1/Actions/VirtualMedia.InsertMedia",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"VirtualMedia",
+								"CD1",
+								"Actions",
+								"VirtualMedia.InsertMedia"
+							]
+						},
+						"description": "- CD[num] in location depends on what is already mounted\r\n- modify Image, UserName, Password as desired\r\n- UserName and Password are optional (i.e. only need if share host requires them)"
+					},
+					"response": []
+				},
+				{
+					"name": "unmount CD",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/VirtualMedia/CD1/Actions/VirtualMedia.EjectMedia",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"VirtualMedia",
+								"CD1",
+								"Actions",
+								"VirtualMedia.EjectMedia"
+							]
+						},
+						"description": "- no payload\r\n- only available when a CD is already mounted"
+					},
+					"response": []
+				},
+				{
+					"name": "GET floppy",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/VirtualMedia/Floppy3",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Managers",
+								"1",
+								"VirtualMedia",
+								"Floppy3"
+							]
+						},
+						"description": "- location is **sample only** (\"Floppy3\"), Floppy[num] depends on where the floppy image is mounted\r\n- currently cannot mount floppy via redfish, this link only appears if floppy already mounted via web/ikvm"
+					},
+					"response": []
+				}
+			],
+			"description": "- insert CD\r\n- eject CD\r\n- note currently cannot mount floppy via redfish, but will show link if mounted via web/ikvm",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "GET managers",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Managers/1",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Managers",
+						"1"
+					]
+				},
+				"description": "- links to various bmc configuration\r\n- basic bmc config (ex. fw version, date/time)\r\n- targets to perform bmc unit reset + factory default"
+			},
+			"response": []
+		},
+		{
+			"name": "set datetime",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"DateTime\": \"2022-06-15T00:00:00Z\", \"DateTimeLocalOffset\": \"+08:00\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Managers/1",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Managers",
+						"1"
+					]
+				},
+				"description": "- template provided for format; modify values as desired"
+			},
+			"response": []
+		},
+		{
+			"name": "perform bmc unit reset",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Actions/Manager.Reset",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Managers",
+						"1",
+						"Actions",
+						"Manager.Reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET factory default options",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Oem/Supermicro/ResetActionInfo",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Managers",
+						"1",
+						"Oem",
+						"Supermicro",
+						"ResetActionInfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "perform factory default: clear all",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Option\": \"ClearConfig\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Actions/Oem/SmcManager.Reset",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Managers",
+						"1",
+						"Actions",
+						"Oem",
+						"SmcManager.Reset"
+					]
+				},
+				"description": "- clears accounts, sets ADMIN password to unique password"
+			},
+			"response": []
+		},
+		{
+			"name": "perform factory default: preserve user",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Option\": \"PreserveUser\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Actions/Oem/SmcManager.Reset",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Managers",
+						"1",
+						"Actions",
+						"Oem",
+						"SmcManager.Reset"
+					]
+				},
+				"description": "- will preserve accounts, ADMIN password is preserved as well"
+			},
+			"response": []
+		},
+		{
+			"name": "perform factory default: reset to ADMIN",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Option\": \"ResetToADMIN\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Managers/1/Actions/Oem/SmcManager.Reset",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Managers",
+						"1",
+						"Actions",
+						"Oem",
+						"SmcManager.Reset"
+					]
+				},
+				"description": "- clears accounts, sets ADMIN password to ADMIN"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

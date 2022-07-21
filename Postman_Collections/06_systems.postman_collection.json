@@ -1,0 +1,1829 @@
+{
+	"info": {
+		"_postman_id": "38f7194a-691e-457c-b778-eaf6cf7f66db",
+		"name": "06_systems",
+		"description": "possible action items/usage:\r\n- check/configure SEL + mark acknowledgements\r\n- power control\r\n- UID control\r\n- configure BIOS (next boot, boot order, UEFI boot options, change boot mode)\r\n- check processor info\r\n- check DIMM info\r\n- check storage info\r\n- check NIC info\r\n- configure NodeManager power policy (where applicable)\r\n\r\nrelated uris:\r\n- /redfish/v1/Systems/1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "bios configuration",
+			"item": [
+				{
+					"name": "GET current bios configuration",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"ResetType\": \"ForceRestart\"}"
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/Bios",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"Bios"
+							]
+						},
+						"description": "- make sure system is POST complete otherwise attributes will not appear"
+					},
+					"response": []
+				},
+				{
+					"name": "modify bios setting",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Attributes\": {\"QuietBoot\": false}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/Bios",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"Bios"
+							]
+						},
+						"description": "- **sample payload only**\r\n- modify the attribute:value in Attributes as desired; reference Attributes list in /Bios response for proper attribute name\r\n- after PATCH, settings will **not** take effect until after a complete host reboot\r\n- check pending settings in /redfish/v1/Systems/1/Bios/SD"
+					},
+					"response": []
+				},
+				{
+					"name": "get pending settings",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/Bios/SD",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"Bios",
+								"SD"
+							]
+						},
+						"description": "- any pending bios attribute changes will be shown here\r\n- these are the changes that will take effect **after** a host reboot"
+					},
+					"response": []
+				},
+				{
+					"name": "set one time boot override",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Boot\": {\"BootSourceOverrideEnabled\": \"Once\", \"BootSourceOverrideTarget\": \"BiosSetup\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1"
+							]
+						},
+						"description": "- sample payload will set one-time boot override to bios setup menu\r\n- modify BootSourceOverrideTarget as desired (available options are under BootSourceOverrideTarget@Redfish.AllowableValues)\r\n- *requires host reboot to take effect*"
+					},
+					"response": []
+				},
+				{
+					"name": "set continuous boot override",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Boot\": {\"BootSourceOverrideEnabled\": \"Continuous\", \"BootSourceOverrideTarget\": \"BiosSetup\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1"
+							]
+						},
+						"description": "- sample payload will set continuous boot override to bios setup menu\r\n- modify BootSourceOverrideTarget as desired (available options are under BootSourceOverrideTarget@Redfish.AllowableValues)\r\n- *requires host reboot to take effect*"
+					},
+					"response": []
+				},
+				{
+					"name": "set one time boot to uefi boot option",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Boot\": {\"BootSourceOverrideEnabled\": \"Once\", \"BootSourceOverrideTarget\": \"UefiBootNext\", \"BootNext\": \"Boot0001\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1"
+							]
+						},
+						"description": "- **sample payload only**\r\n- BootNext value depends on available options in Boot.BootOrder, and must be one the array values\r\n- *requires host reboot to take effect*"
+					},
+					"response": []
+				},
+				{
+					"name": "change uefi boot options order",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Boot\": {\"BootOrder\": [\"Boot0002\", \"Boot0001\"]}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1"
+							]
+						},
+						"description": "- **sample payload only**\r\n- actual BootOrder array value depends on current available options in Boot.BootOrder\r\n- *requires host reboot to take effect*"
+					},
+					"response": []
+				},
+				{
+					"name": "GET uefi boot options",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/BootOptions",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"BootOptions"
+							]
+						},
+						"description": "- array of links to each uefi boot option available (list should be same as /Systems/1 Boot.BootOrder)"
+					},
+					"response": []
+				},
+				{
+					"name": "disable uefi boot option",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"BootOptionEnabled\": false}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/BootOptions/Boot0001",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"BootOptions",
+								"Boot0001"
+							]
+						},
+						"description": "- **sample only**\r\n- location depends on which boot options are available and which one to disable\r\n- *requires host reboot to take effect*"
+					},
+					"response": []
+				},
+				{
+					"name": "enable uefi boot option",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"BootOptionEnabled\": true}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/BootOptions/Boot0001",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"BootOptions",
+								"Boot0001"
+							]
+						},
+						"description": "- **sample only**\r\n- location depends on which boot options are available and which one to disable\r\n- *requires host reboot to take effect*"
+					},
+					"response": []
+				},
+				{
+					"name": "GET secure boot",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/SecureBoot",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"SecureBoot"
+							]
+						},
+						"description": "- current secure boot configuration"
+					},
+					"response": []
+				},
+				{
+					"name": "enable secure boot",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"SecureBootEnable\": true}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/SecureBoot",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"SecureBoot"
+							]
+						},
+						"description": "- *requires host reboot to take effect*"
+					},
+					"response": []
+				},
+				{
+					"name": "disable secure boot",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"SecureBootEnable\": false}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/SecureBoot",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"SecureBoot"
+							]
+						},
+						"description": "- *requires host reboot to take effect*"
+					},
+					"response": []
+				},
+				{
+					"name": "reset all secure boot keys to default",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"ResetKeysType\": \"ResetAllKeysToDefault\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/SecureBoot/Actions/SecureBoot.ResetKeys",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"SecureBoot",
+								"Actions",
+								"SecureBoot.ResetKeys"
+							]
+						},
+						"description": "- *requires host reboot to take effect*"
+					},
+					"response": []
+				},
+				{
+					"name": "delete PK",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"ResetKeysType\": \"DeletePK\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/SecureBoot/Actions/SecureBoot.ResetKeys",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"SecureBoot",
+								"Actions",
+								"SecureBoot.ResetKeys"
+							]
+						},
+						"description": "- *requires host reboot to take effect*"
+					},
+					"response": []
+				},
+				{
+					"name": "delete all secure boot keys",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"ResetKeysType\": \"DeleteAllKeys\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/SecureBoot/Actions/SecureBoot.ResetKeys",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"SecureBoot",
+								"Actions",
+								"SecureBoot.ResetKeys"
+							]
+						},
+						"description": "- *requires host reboot to take effect*"
+					},
+					"response": []
+				}
+			],
+			"description": "- modify UEFI boot order\r\n- disable UEFI boot option\r\n- modify bios setting\r\n- configure secureboot",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "system event log",
+			"item": [
+				{
+					"name": "GET SEL",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/LogServices/Log1",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"LogServices",
+								"Log1"
+							]
+						},
+						"description": "- settings and configuration for SEL"
+					},
+					"response": []
+				},
+				{
+					"name": "configure AC Power On log",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Oem\": {\"Supermicro\": {\"ACPowerOnEventLog\": true}}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/LogServices/Log1",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"LogServices",
+								"Log1"
+							]
+						},
+						"description": "- modify true/false\r\n- true = log AC power on event\r\n- false = do not log AC power on event"
+					},
+					"response": []
+				},
+				{
+					"name": "configure FIFO log",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Oem\": {\"Supermicro\": {\"FIFOEventLog\": true}}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/LogServices/Log1",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"LogServices",
+								"Log1"
+							]
+						},
+						"description": "- modify true/false\r\n- true = use FIFO log"
+					},
+					"response": []
+				},
+				{
+					"name": "configure smart power log",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Oem\": {\"Supermicro\": {\"SmartPowerEventLog\": false}}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/LogServices/Log1",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"LogServices",
+								"Log1"
+							]
+						},
+						"description": "- modify true/false\r\n- true = allow verbose smart power logging"
+					},
+					"response": []
+				},
+				{
+					"name": "clear SEL",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/LogServices/Log1/Actions/LogService.ClearLog",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"LogServices",
+								"Log1",
+								"Actions",
+								"LogService.ClearLog"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET SEL entries",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/LogServices/Log1/Entries",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"LogServices",
+								"Log1",
+								"Entries"
+							]
+						},
+						"description": "- array of SEL entries, links to specific entries"
+					},
+					"response": []
+				},
+				{
+					"name": "mark SEL entry as acknowledged",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Oem\": {\"Supermicro\": {\"MarkAsAcknowledged\": true}}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/LogServices/Log1/Entries/1",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"LogServices",
+								"Log1",
+								"Entries",
+								"1"
+							]
+						},
+						"description": "- **sample only**\r\n- location depends on which entry to mark acknowledgement\r\n- note MarkAsAcknowledged only available for Warning or Critical level entries"
+					},
+					"response": []
+				},
+				{
+					"name": "unmark SEL entry as acknowledged",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"Oem\": {\"Supermicro\": {\"MarkAsAcknowledged\": false}}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/LogServices/Log1/Entries/1",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"LogServices",
+								"Log1",
+								"Entries",
+								"1"
+							]
+						},
+						"description": "- **sample only**\r\n- location depends on which entry to mark acknowledgement\r\n- note MarkAsAcknowledged only available for Warning or Critical level entries"
+					},
+					"response": []
+				},
+				{
+					"name": "clear all acknowledgements",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/LogServices/Log1/Actions/Oem/SmcLogService.ClearAcknowledgements",
+							"protocol": "https",
+							"host": [
+								"{{sut_ip}}"
+							],
+							"path": [
+								"redfish",
+								"v1",
+								"Systems",
+								"1",
+								"LogServices",
+								"Log1",
+								"Actions",
+								"Oem",
+								"SmcLogService.ClearAcknowledgements"
+							]
+						},
+						"description": "- this will clear all acknowledgements\r\n- use PATCH MarkAsAcknowledged:false to mark individual entries"
+					},
+					"response": []
+				}
+			],
+			"description": "- enable/disable AC power on event log\r\n- enable/disable FIFO event log\r\n- clear SEL\r\n- acknowledge warning + critical entries\r\n- clear acknowledgements",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "GET systems",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Systems/1",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Systems",
+						"1"
+					]
+				},
+				"description": "- links to various host-related configuration\r\n- power + UID control"
+			},
+			"response": []
+		},
+		{
+			"name": "turn on UID",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"IndicatorLED\": \"Blinking\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Systems/1",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Systems",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "turn off UID",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"IndicatorLED\": \"Off\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Systems/1",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Systems",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reboot system (host)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ResetType\": \"GracefulRestart\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/Actions/ComputerSystem.Reset",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Systems",
+						"1",
+						"Actions",
+						"ComputerSystem.Reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "turn off system",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ResetType\": \"GracefulShutdown\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/Actions/ComputerSystem.Reset",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Systems",
+						"1",
+						"Actions",
+						"ComputerSystem.Reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "turn on system",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ResetType\": \"On\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/Actions/ComputerSystem.Reset",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Systems",
+						"1",
+						"Actions",
+						"ComputerSystem.Reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "force reboot system (host)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ResetType\": \"ForceRestart\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/Actions/ComputerSystem.Reset",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Systems",
+						"1",
+						"Actions",
+						"ComputerSystem.Reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "force turn off system",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ResetType\": \"ForceOff\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/Actions/ComputerSystem.Reset",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Systems",
+						"1",
+						"Actions",
+						"ComputerSystem.Reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "force turn on system",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ResetType\": \"ForceOn\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/Actions/ComputerSystem.Reset",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Systems",
+						"1",
+						"Actions",
+						"ComputerSystem.Reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET all processors",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/Processors",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Systems",
+						"1",
+						"Processors"
+					]
+				},
+				"description": "- array of links to all installed processors"
+			},
+			"response": []
+		},
+		{
+			"name": "GET processor metrics",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/ProcessorSummary/ProcessorMetrics",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Systems",
+						"1",
+						"ProcessorSummary",
+						"ProcessorMetrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET all DIMMs",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/Memory",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Systems",
+						"1",
+						"Memory"
+					]
+				},
+				"description": "- array of links to all installed DIMMs"
+			},
+			"response": []
+		},
+		{
+			"name": "GET memory metrics",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{sut_ip}}/redfish/v1/Systems/1/MemorySummary/MemoryMetrics",
+					"protocol": "https",
+					"host": [
+						"{{sut_ip}}"
+					],
+					"path": [
+						"redfish",
+						"v1",
+						"Systems",
+						"1",
+						"MemorySummary",
+						"MemoryMetrics"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
